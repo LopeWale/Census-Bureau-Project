@@ -1,0 +1,2 @@
+# Census-Bureau-Project
+In this project, I will apply the skills you have acquired in my MLops nanodegree to develop a classification model on publicly available Census Bureau data. I will also create unit tests to monitor the model performance on various slices of the data. Finally, I will deploy your model using the FastAPI package and create API tests. Both the slice-validation and the API tests will be incorporated into a CI/CD framework using GitHub Actions.
