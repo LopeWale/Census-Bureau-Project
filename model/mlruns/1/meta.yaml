@@ -1,0 +1,4 @@
+artifact_location: file:///Users/emmanuelakinwale/Desktop/Udacity_project3/Census-Bureau-Project/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: Census_Application

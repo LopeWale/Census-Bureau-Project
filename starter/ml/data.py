@@ -1,6 +1,23 @@
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+import pandas as pd
+import logging
 
+#get the data from the dir and save it as a pandas' dataframe
+def get_data():
+    dataset = pd.read_csv("data/census.csv")
+    X = pd.DataFrame(dataset)
+    cleaned_column_names = (X.columns
+                            .str.strip()
+                            .str.replace('((?<=[a-z0-9])[A-Z]|(?!^)[A-Z](?=[a-z]))', r'_\1')
+                            .str.lower()
+                            .str.replace('[ _-]+', '_')
+                            .str.replace('[}{)(><.!?\\\\:;,-]', ''))
+    X.columns = cleaned_column_names
+
+    X["education"] = X["education"].replace(dict.fromkeys(['9th', '10th', '11th', '12th'], 'Some-HS'))
+    X.to_csv('./data/clean_data.csv')
+    return X
 
 def process_data(
     X, categorical_features=[], label=None, training=True, encoder=None, lb=None
@@ -50,6 +67,17 @@ def process_data(
     else:
         y = np.array([])
 
+    # get the categorical columns to a list
+    for cat in X.select_dtypes(['object']).columns:
+        X[cat] = X[cat].str.strip()
+
+        """replace the columns with '?' which are all in the categorical columns with 'unknown'
+        keeping this rows because there is not more than 2 values with '? per row, 
+        and believe rows with '?' still has valuable information for the model"""
+
+        X[cat] = X[cat].str.replace('?', 'unknown', regex=False)
+        categorical_features.append(cat)
+
     X_categorical = X[categorical_features].values
     X_continuous = X.drop(*[categorical_features], axis=1)
 
@@ -63,8 +91,8 @@ def process_data(
         try:
             y = lb.transform(y.values).ravel()
         # Catch the case where y is None because we're doing inference.
-        except AttributeError:
-            pass
+        except AttributeError as err:
+            raise err
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
     return X, y, encoder, lb

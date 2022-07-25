@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/emmanuelakinwale/Desktop/Udacity_project3/Census-Bureau-Project/mlruns/1/535754d1cdb64f1eb74a64f1ba08ab21/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+name: ''
+run_id: 535754d1cdb64f1eb74a64f1ba08ab21
+run_uuid: 535754d1cdb64f1eb74a64f1ba08ab21
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1658375604579
+status: 1
+tags: []
+user_id: emmanuelakinwale
